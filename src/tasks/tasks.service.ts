@@ -36,4 +36,11 @@ export class TasksService {
     this.tasks = this.tasks.filter((task) => task.id !== id);
     return { message: `Task with id : ${id} has been deleted successfully` };
   }
+
+  // Update a task'status by id
+  updateTaskStatus(id: string, taskStatus: TaskStatus): Task {
+    const task = this.getTaskById(id);
+    task.status = taskStatus;
+    return task;
+  }
 }

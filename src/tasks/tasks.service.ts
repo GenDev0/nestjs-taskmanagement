@@ -30,4 +30,10 @@ export class TasksService {
     this.tasks.push(task);
     return task;
   }
+
+  // Delete a task by ID
+  deleteTask(id: string): { message: string } {
+    this.tasks = this.tasks.filter((task) => task.id !== id);
+    return { message: `Task with id : ${id} has been deleted successfully` };
+  }
 }

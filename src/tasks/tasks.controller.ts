@@ -12,7 +12,7 @@ export class TasksController {
     return this.tasksSercive.getAllTasks();
   }
 
-  //post request to /tasks to create a new task
+  //Post request to /tasks to create a new task
   @Post()
   createTask(
     @Body('title') title: string,

@@ -39,12 +39,12 @@ export class TasksController {
     return this.tasksSercive.getTaskById(id);
   }
 
-  // //Post request to /tasks to create a new task
-  // @Post()
-  // @UsePipes(ValidationPipe)
-  // createTask(@Body() createTaskDto: CreateTaskDto): Task {
-  //   return this.tasksSercive.createTask(createTaskDto);
-  // }
+  //Post request to /tasks to create a new task
+  @Post()
+  @UsePipes(ValidationPipe)
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+    return this.tasksSercive.createTask(createTaskDto);
+  }
 
   // // DELETE request to delete a task by ID
   // @Delete(':id')

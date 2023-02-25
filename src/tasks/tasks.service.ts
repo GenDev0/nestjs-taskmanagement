@@ -41,7 +41,18 @@ export class TasksService {
     return found;
   }
 
-  // // Create a new Task
+  // Create a new Task
+  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    const { title, description } = createTaskDto;
+    const task = new Task();
+    task.title = title;
+    task.description = description;
+    task.status = TaskStatus.OPEN;
+    await task.save();
+    return task;
+  }
+
+  //
   // createTask(createTaskDto: CreateTaskDto): Task {
   //   const { title, description } = createTaskDto;
   //   const task: Task = {

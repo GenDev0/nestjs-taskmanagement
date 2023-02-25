@@ -9,4 +9,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   database: 'managetasks',
   entities: [__dirname + '../**/*.entity.ts'],
   synchronize: true, // not good in Production
+  autoLoadEntities: true,
 };

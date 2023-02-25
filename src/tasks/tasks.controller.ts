@@ -22,7 +22,7 @@ export class TasksController {
 
   //Get request to /tasks for all tasks
   @Get()
-  getTasks(@Query() taskFilterDto: GetTasksFilterDto): Task[] {
+  getTasks(@Query(ValidationPipe) taskFilterDto: GetTasksFilterDto): Task[] {
     if (Object.keys(taskFilterDto).length) {
       return this.tasksSercive.getTasksWithFilter(taskFilterDto);
     } else {

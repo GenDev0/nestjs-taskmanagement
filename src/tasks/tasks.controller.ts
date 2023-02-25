@@ -46,11 +46,13 @@ export class TasksController {
     return this.tasksSercive.createTask(createTaskDto);
   }
 
-  // // DELETE request to delete a task by ID
-  // @Delete(':id')
-  // deleteTask(@Param('id') id: string): { message: string } {
-  //   return this.tasksSercive.deleteTask(id);
-  // }
+  // DELETE request to delete a task by ID
+  @Delete(':id')
+  deleteTask(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<{ message: string }> {
+    return this.tasksSercive.deleteTask(id);
+  }
 
   // // UPDATE request to update task status by id
   // @Patch(':id/status')

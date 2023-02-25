@@ -46,25 +46,16 @@ export class TasksService {
     return this.taskRepository.createTask(createTaskDto);
   }
 
-  //
-  // createTask(createTaskDto: CreateTaskDto): Task {
-  //   const { title, description } = createTaskDto;
-  //   const task: Task = {
-  //     id: uuid(),
-  //     title,
-  //     description,
-  //     status: TaskStatus.OPEN,
-  //   };
-  //   this.tasks.push(task);
-  //   return task;
-  // }
+  // Delete a task by ID
+  async deleteTask(id: number): Promise<{ message: string }> {
+    const result = await this.taskRepository.delete({ id });
 
-  // // Delete a task by ID
-  // deleteTask(id: string): { message: string } {
-  //   const found = this.getTaskById(id);
-  //   this.tasks = this.tasks.filter((task) => task.id !== found.id);
-  //   return { message: `Task with id : ${id} has been deleted successfully` };
-  // }
+    if (result.affected > 0) {
+      return { message: `Task with id : ${id} has been deleted successfully` };
+    } else {
+      throw new NotFoundException(`Task with ID ${id} Not Found`);
+    }
+  }
 
   // // Update a task'status by id
   // updateTaskStatus(id: string, taskStatus: TaskStatus): Task {

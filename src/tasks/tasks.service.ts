@@ -8,7 +8,6 @@ import { TaskStatus } from './task-status.enum';
 @Injectable()
 export class TasksService {
   constructor(private readonly taskRepository: Taskrepository) {}
-  private tasks: Task[] = [];
 
   // // Get All Taks
   // getAllTasks(): Task[] {
@@ -33,15 +32,14 @@ export class TasksService {
   //   return tasks;
   // }
 
-  // // Get a task by ID
-  // getTaskById(id: string): Task {
-  //   const task = this.tasks.find((task) => task.id === id);
-  //   // if task not found throw exception
-  //   if (!task) {
-  //     throw new NotFoundException(`Task with ID ${id} Not Found`);
-  //   }
-  //   return task;
-  // }
+  // Get a task by ID
+  async getTaskById(id: number): Promise<Task> {
+    const found = await this.taskRepository.findOneBy({ id });
+    if (!found) {
+      throw new NotFoundException(`Task with ID ${id} Not Found`);
+    }
+    return found;
+  }
 
   // // Create a new Task
   // createTask(createTaskDto: CreateTaskDto): Task {

@@ -5,6 +5,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -32,11 +33,11 @@ export class TasksController {
   //   }
   // }
 
-  // // Get Request to find a task by ID
-  // @Get('/:id')
-  // getTaskById(@Param('id') id: string): Task {
-  //   return this.tasksSercive.getTaskById(id);
-  // }
+  // Get Request to find a task by ID
+  @Get('/:id')
+  getTaskById(@Param('id', ParseIntPipe) id: number): Promise<Task> {
+    return this.tasksSercive.getTaskById(id);
+  }
 
   // //Post request to /tasks to create a new task
   // @Post()

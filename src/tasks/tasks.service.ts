@@ -57,10 +57,11 @@ export class TasksService {
     }
   }
 
-  // // Update a task'status by id
-  // updateTaskStatus(id: string, taskStatus: TaskStatus): Task {
-  //   const task = this.getTaskById(id);
-  //   task.status = taskStatus;
-  //   return task;
-  // }
+  // Update a task'status by id
+  async updateTaskStatus(id: number, taskStatus: TaskStatus): Promise<Task> {
+    const task = await this.getTaskById(id);
+    task.status = taskStatus;
+    await task.save();
+    return task;
+  }
 }

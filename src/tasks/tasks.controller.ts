@@ -54,12 +54,12 @@ export class TasksController {
     return this.tasksSercive.deleteTask(id);
   }
 
-  // // UPDATE request to update task status by id
-  // @Patch(':id/status')
-  // updateTaskStatus(
-  //   @Param('id') id: string,
-  //   @Body('status', TaskStatusValidationPipe) taskStatus: TaskStatus,
-  // ): Task {
-  //   return this.tasksSercive.updateTaskStatus(id, taskStatus);
-  // }
+  // UPDATE request to update task status by id
+  @Patch(':id/status')
+  updateTaskStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status', TaskStatusValidationPipe) taskStatus: TaskStatus,
+  ): Promise<Task> {
+    return this.tasksSercive.updateTaskStatus(id, taskStatus);
+  }
 }

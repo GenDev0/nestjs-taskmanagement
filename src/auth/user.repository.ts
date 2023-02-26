@@ -24,15 +24,20 @@ export class UserRepository extends Repository<User> {
   // Sign Up new user
   async signUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
     const { username, password } = authCredentialsDto;
-
+    // initiate new User entity
     const user = new User();
+    // isert username
     user.username = username;
+    // prepare unique salt per user
     user.salt = await bcrypt.genSalt();
+    // hash password with unique salt
     user.password = await this.hashPassword(password, user.salt);
 
     try {
+      // insert user into DB
       await user.save();
     } catch (error) {
+      // throw error in case of duplicate or else...
       if (error.code === 'ER_DUP_ENTRY') {
         throw new ConflictException('Username already exists !');
       } else {
@@ -46,7 +51,9 @@ export class UserRepository extends Repository<User> {
     AuthCredentialsDto: AuthCredentialsDto,
   ): Promise<string> {
     const { username, password } = AuthCredentialsDto;
+    // find user from DB
     const user = await this.userRepository.findOneBy({ username });
+    // check if user exist and the password is valid
     if (user && (await user.validatePassword(password))) {
       return user.username;
     } else {

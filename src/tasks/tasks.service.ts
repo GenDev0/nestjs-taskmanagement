@@ -9,28 +9,11 @@ import { TaskStatus } from './task-status.enum';
 export class TasksService {
   constructor(private readonly taskRepository: Taskrepository) {}
 
-  // // Get All Taks
-  // getAllTasks(): Task[] {
-  //   return this.tasks;
-  // }
+  // Get All Taks
 
-  // // Get filtred Tasks
-  // getTasksWithFilter(taskFilterDto: GetTasksFilterDto): Task[] {
-  //   let tasks = this.getAllTasks();
-  //   const { status, search } = taskFilterDto;
-
-  //   if (status) {
-  //     tasks = tasks.filter((task) => task.status === status);
-  //   }
-  //   if (search) {
-  //     tasks = tasks.filter(
-  //       (task) =>
-  //         task.title.includes(search) || task.description.includes(search),
-  //     );
-  //   }
-
-  //   return tasks;
-  // }
+  async getTasks(taskFilterDto: GetTasksFilterDto): Promise<Task[]> {
+    return await this.taskRepository.getTasks(taskFilterDto);
+  }
 
   // Get a task by ID
   async getTaskById(id: number): Promise<Task> {

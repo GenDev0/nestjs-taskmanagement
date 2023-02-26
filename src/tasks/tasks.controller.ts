@@ -23,15 +23,14 @@ import { TaskStatus } from './task-status.enum';
 export class TasksController {
   constructor(private readonly tasksSercive: TasksService) {}
 
-  // //Get request to /tasks for all tasks
-  // @Get()
-  // getTasks(@Query(ValidationPipe) taskFilterDto: GetTasksFilterDto): Task[] {
-  //   if (Object.keys(taskFilterDto).length) {
-  //     return this.tasksSercive.getTasksWithFilter(taskFilterDto);
-  //   } else {
-  //     return this.tasksSercive.getAllTasks();
-  //   }
-  // }
+  //Get request to /tasks for all tasks : Task[]
+  @Get()
+  getTasks(
+    @Query(ValidationPipe)
+    taskFilterDto: GetTasksFilterDto,
+  ): Promise<Task[]> {
+    return this.tasksSercive.getTasks(taskFilterDto);
+  }
 
   // Get Request to find a task by ID
   @Get('/:id')

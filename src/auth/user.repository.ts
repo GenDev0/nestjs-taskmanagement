@@ -1,7 +1,6 @@
 import {
   ConflictException,
   InternalServerErrorException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -52,7 +51,6 @@ export class UserRepository extends Repository<User> {
       return user.username;
     } else {
       return null;
-      //throw new UnauthorizedException('invalid Credentials');
     }
   }
 

@@ -1,7 +1,9 @@
+import { Task } from './../tasks/task.entity';
 import {
   BaseEntity,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
@@ -21,6 +23,9 @@ export class User extends BaseEntity {
 
   @Column()
   salt: string;
+
+  @OneToMany((type) => Task, (task) => task.user, { eager: true })
+  tasks: Task[];
 
   // Validate existing hashed password with input hashed password
   async validatePassword(password: string): Promise<boolean> {

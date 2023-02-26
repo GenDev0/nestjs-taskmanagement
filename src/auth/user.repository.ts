@@ -2,6 +2,10 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { User } from './user.entity';
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 export class UserRepository extends Repository<User> {
   constructor(
@@ -24,6 +28,14 @@ export class UserRepository extends Repository<User> {
     user.username = username;
     user.password = password;
 
-    await user.save();
+    try {
+      await user.save();
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        throw new ConflictException('Username already exists !');
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
   }
 }

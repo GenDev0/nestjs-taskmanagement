@@ -1,6 +1,7 @@
 import {
   ConflictException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -38,6 +39,20 @@ export class UserRepository extends Repository<User> {
       } else {
         throw new InternalServerErrorException();
       }
+    }
+  }
+
+  //Password Validation for user
+  async validateUserPassword(
+    AuthCredentialsDto: AuthCredentialsDto,
+  ): Promise<string> {
+    const { username, password } = AuthCredentialsDto;
+    const user = await this.userRepository.findOneBy({ username });
+    if (user && (await user.validatePassword(password))) {
+      return user.username;
+    } else {
+      return null;
+      //throw new UnauthorizedException('invalid Credentials');
     }
   }
 

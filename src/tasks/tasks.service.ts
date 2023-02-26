@@ -1,3 +1,4 @@
+import { User } from './../auth/user.entity';
 import { Taskrepository } from './task.repository';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
@@ -11,8 +12,11 @@ export class TasksService {
 
   // Get All Taks
 
-  async getTasks(taskFilterDto: GetTasksFilterDto): Promise<Task[]> {
-    return await this.taskRepository.getTasks(taskFilterDto);
+  async getTasks(
+    taskFilterDto: GetTasksFilterDto,
+    user: User,
+  ): Promise<Task[]> {
+    return await this.taskRepository.getTasks(taskFilterDto, user);
   }
 
   // Get a task by ID
@@ -25,8 +29,8 @@ export class TasksService {
   }
 
   // Create a new Task
-  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
-    return this.taskRepository.createTask(createTaskDto);
+  async createTask(createTaskDto: CreateTaskDto, user: User): Promise<Task> {
+    return this.taskRepository.createTask(createTaskDto, user);
   }
 
   // Delete a task by ID

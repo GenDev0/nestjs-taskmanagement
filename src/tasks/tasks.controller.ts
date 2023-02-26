@@ -1,3 +1,5 @@
+import { GetUser } from './../auth/get-user.decorator';
+import { User } from './../auth/user.entity';
 import {
   Body,
   Controller,
@@ -31,8 +33,9 @@ export class TasksController {
   getTasks(
     @Query(ValidationPipe)
     taskFilterDto: GetTasksFilterDto,
+    @GetUser() user: User,
   ): Promise<Task[]> {
-    return this.tasksSercive.getTasks(taskFilterDto);
+    return this.tasksSercive.getTasks(taskFilterDto, user);
   }
 
   // Get Request to find a task by ID
@@ -44,8 +47,11 @@ export class TasksController {
   //Post request to /tasks to create a new task
   @Post()
   @UsePipes(ValidationPipe)
-  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
-    return this.tasksSercive.createTask(createTaskDto);
+  createTask(
+    @Body() createTaskDto: CreateTaskDto,
+    @GetUser() user: User,
+  ): Promise<Task> {
+    return this.tasksSercive.createTask(createTaskDto, user);
   }
 
   // DELETE request to delete a task by ID
